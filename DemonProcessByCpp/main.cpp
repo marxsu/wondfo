@@ -31,6 +31,8 @@ int start_proc_by_name(const char* procname)
 
     char  cmd[100];
     sprintf(cmd,"./%s",procname);
+
+//    sprintf(cmd,"%s -qws",filename);
 //    system(cmd);//会创建一个bash子进程执行命令
 
 
@@ -40,7 +42,7 @@ int start_proc_by_name(const char* procname)
         return 0;
     } else if (pid == 0) {                                                     /* 创建进程成功，此处是子进程的代码 */
         if (execl(filename,cmd,"-qws",NULL) != -1) {
-            exit(0);
+            return 0;
         } else {
             exit(1);
         }
@@ -155,7 +157,7 @@ int init_daemon(void)
 
 int main(int argc, char *argv[])
 {
-    init_daemon();
+//    init_daemon();利用守护进程的方式会导致唤醒的进程无法加载配置文件跟历史数据，因为守护进程会切断外部联系
     while(1)
     {
         int result;
